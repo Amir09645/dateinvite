@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>سوال جالب</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+    .container {
+      text-align: center;
+    }
+    .btn {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      border: none;
+      background-color: #007bff;
+      color: #fff;
+      border-radius: 5px;
+      transition: transform 0.2s ease;
+    }
+    .btn.no {
+      position: absolute;
+    }
+    #message {
+      display: none;
+      font-size: 20px;
+      color: green;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>می خوای با بیای سر قرار ؟</h1>
+    <button class="btn yes" onclick="showMessage()">آره</button>
+    <button class="btn no" onmouseover="moveButton()">نه</button>
+    <p id="message">میدونستم میای!</p>
+  </div>
+
+  <script>
+    function moveButton() {
+      const btnNo = document.querySelector('.btn.no');
+      const randomX = Math.floor(Math.random() * (window.innerWidth - btnNo.offsetWidth));
+      const randomY = Math.floor(Math.random() * (window.innerHeight - btnNo.offsetHeight));
+      btnNo.style.left = randomX + 'px';
+      btnNo.style.top = randomY + 'px';
+    }
+
+    function showMessage() {
+      document.getElementById('message').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
