@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>جون مادرت</title>
+  <title>کسینوس و سینوس</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -12,10 +12,12 @@
       align-items: center;
       height: 100vh;
       margin: 0;
+      overflow: hidden;
       background-color: #f0f0f0;
     }
     .container {
       text-align: center;
+      z-index: 1;
     }
     .btn {
       margin: 10px;
@@ -32,33 +34,93 @@
       position: absolute;
     }
     #message {
-      display: none;
       font-size: 20px;
       color: green;
       margin-top: 20px;
+      visibility: hidden;
+    }
+    .heart {
+      position: absolute;
+      color: red;
+      font-size: 24px;
+      opacity: 1;
+      animation: rise 2s ease-out forwards;
+    }
+    @keyframes rise {
+      0% {
+        transform: scale(0.5) translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1.5) translateY(-200px);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>میخوای با من بیای سر قرار ؟</h1>
+    <h1>می خوای با من بیای سر قرار ؟</h1>
     <button class="btn yes" onclick="showMessage()">آره</button>
-    <button class="btn no" onmouseover="moveButton()">نه</button>
-    <p id="message">میدونستم عاشقمی!</p>
+    <button class="btn no" onmouseover="handleNoHover()" onclick="handleNoClick()">نه</button>
+    <p id="message"></p>
   </div>
 
   <script>
-    function moveButton() {
-      const btnNo = document.querySelector('.btn.no');
-      const randomX = Math.floor(Math.random() * (window.innerWidth - btnNo.offsetWidth));
-      const randomY = Math.floor(Math.random() * (window.innerHeight - btnNo.offsetHeight));
-      btnNo.style.left = randomX + 'px';
-      btnNo.style.top = randomY + 'px';
+    let noClickCount = 0;
+
+    function handleNoClick() {
+      const message = document.getElementById("message");
+      noClickCount++;
+
+      if (noClickCount === 1) {
+        message.innerText = "!تروخدا";
+      } else if (noClickCount === 2) {
+        message.innerText = "!جون مادرت";
+      } else if (noClickCount === 3) {
+        message.innerText = "!مامانت دوست داری؟";
+      } else {
+        // بعد از بار سوم، دکمه "نه" فرار می‌کند
+        message.style.visibility = 'hidden';
+      }
+      
+      message.style.visibility = 'visible';
+    }
+
+    function handleNoHover() {
+      if (noClickCount >= 3) {
+        const btnNo = document.querySelector('.btn.no');
+        const randomX = Math.floor(Math.random() * (window.innerWidth - btnNo.offsetWidth));
+        const randomY = Math.floor(Math.random() * (window.innerHeight - btnNo.offsetHeight));
+        btnNo.style.left = randomX + 'px';
+        btnNo.style.top = randomY + 'px';
+      }
     }
 
     function showMessage() {
-      document.getElementById('message').style.display = 'block';
+      const message = document.getElementById("message");
+      message.innerText = "میدونستم خوشت اومده!";
+      message.style.visibility = 'visible';
+      createHearts();
+    }
+
+    function createHearts() {
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerHTML = '❤️';
+        heart.style.left = Math.random() * window.innerWidth + 'px';
+        heart.style.top = Math.random() * window.innerHeight + 'px';
+        heart.style.fontSize = Math.random() * 20 + 20 + 'px';
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 2000); // حذف قلب‌ها پس از 2 ثانیه
+      }
     }
   </script>
 </body>
 </html>
+
+
